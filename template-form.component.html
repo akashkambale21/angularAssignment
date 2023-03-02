@@ -1,0 +1,66 @@
+
+<mat-card class="login-page">
+    <mat-card-title> Login (Template-Driven) </mat-card-title>
+    <mat-card-content>
+      <form class="login-form" #loginForm="ngForm">
+        <!-- <mat-form-field>
+                <input matInput type="email" name="email" ngModel #email="ngModel" required email minlength="3" maxlength="20" placeholder="Email">
+                <mat-error *ngIf="email.errors?.required">The email is mandatory</mat-error>
+                <mat-error *ngIf="email.errors?.minlength">
+                  your email must have minimum {{email.errors?.minlength.requiredLength}} chars,
+                  but it only has {{email.errors?.minlength.actualLength}}.
+                </mat-error>
+              </mat-form-field>  -->
+  
+              <input matInput type="email" name="email" ngModel #email="ngModel" required email minlength="3" maxlength="35" placeholder="Email" (blur)="validateEmail(email.value)">
+              <mat-error *ngIf="email.errors?.required">The email is mandatory</mat-error>
+              <mat-error *ngIf="email.errors?.minlength">your email must have minimum {{email.errors?.minlength.requiredLength}} chars,
+                but it only has {{email.errors?.minlength.actualLength}}.</mat-error>
+              <mat-error *ngIf="email.errors?.email">Please enter a valid email address</mat-error>
+              <mat-error *ngIf="!isValidEmail">Please enter a valid domain email in the form of abc@codemindtechnology.com</mat-error>
+  
+        <mat-form-field>
+          <input matInput ngModel #password="ngModel" name="password" type="password" placeholder="Password" required />
+          <mat-error *ngIf="password.errors?.required">The password is mandatory</mat-error>
+        </mat-form-field>
+        <select class="form-control" name="course" [ngModel]="defaultValue">
+          <option *ngFor="let course of courses" value="{{ course }}">
+            {{ course }}
+          </option>
+        </select>
+        <!-- <mat-select [value]="selectedOption">
+                <mat-option value="1">One</mat-option>
+                <mat-option value="2">Two</mat-option>
+              </mat-select> -->
+        <div class="form-group" *ngFor="let gender of genders">
+          <input type="radio" name="gender" id="gender" value="{{ gender.value }}" [ngModel]="defaultGender"
+            class="custom-control custom-radio" />
+          <label for="{{ gender.id }}">{{ gender.value }}</label>
+        </div>
+        <button mat-raised-button color="primary" (click)="login(loginForm)">
+          Login
+        </button>
+      </form>
+      <div class="form-val">
+        <!-- {{ loginForm.value | json}} -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <div class="row justify-content-center mt2" *ngIf="isSubmitted">
+    <div class="col-md-6 rounded shadow py-4">
+      <h2>Form Data</h2>
+      <p>
+        Email: <strong>{{ formData.email }}</strong>
+      </p>
+      <p>
+        Password: <strong>{{ formData.password }}</strong>
+      </p>
+      <p>
+        Course: <strong>{{ formData.course }}</strong>
+      </p>
+      <p>
+        Gender: <strong>{{ formData.gender }}</strong>
+      </p>
+    </div>
+  </div>
